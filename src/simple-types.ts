@@ -24,7 +24,7 @@ console.log("Number: " + SimpleTypes.myNumber);
 console.log("String: " + SimpleTypes.myString);
 
 // Push a number to a list
-// Appends new elements to the end of an array, and returns the new length 
+// Appends new elements to the end of an array, and returns the new length
 // of the array.
 SimpleTypes.list1.push(6);
 
@@ -41,9 +41,12 @@ SimpleTypes.list1.unshift(0);
 // Removes the first element from an array and returns that element.
 SimpleTypes.list1.shift();
 
-document.getElementById("array-list-1")!.textContent = SimpleTypes.list1.toString();
-document.getElementById("array-list-2")!.textContent = SimpleTypes.list2.toString();
+document.getElementById("array-list-1")!.textContent =
+  SimpleTypes.list1.toString();
+document.getElementById("array-list-2")!.textContent =
+  SimpleTypes.list2.toString();
 
 // Example of using TypeScript in the browser
-document.getElementById("number")!.textContent = SimpleTypes.myNumber.toString();
+document.getElementById("number")!.textContent =
+  SimpleTypes.myNumber.toString();
 document.getElementById("string")!.textContent = SimpleTypes.myString;

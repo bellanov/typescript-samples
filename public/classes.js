@@ -11,18 +11,18 @@
  */
 var Classes;
 (function (Classes) {
-    class Vehicle {
-        constructor(wheels, power) {
-            this.speed = 0;
-            this.wheels = wheels;
-            this.power = power;
-        }
-        // Specify return type
-        accelerate(time) {
-            this.speed = this.speed + 0.5 * this.power * time;
-        }
+  class Vehicle {
+    constructor(wheels, power) {
+      this.speed = 0;
+      this.wheels = wheels;
+      this.power = power;
     }
-    Classes.Vehicle = Vehicle;
+    // Specify return type
+    accelerate(time) {
+      this.speed = this.speed + 0.5 * this.power * time;
+    }
+  }
+  Classes.Vehicle = Vehicle;
 })(Classes || (Classes = {}));
 // Import class exported from namespace
 const myVehicle = new Classes.Vehicle(4, 150);
@@ -30,20 +30,20 @@ myVehicle.accelerate(10);
 // Log to console
 console.log(`My vehicle's speed is ${myVehicle.speed} km/h.`);
 class Car extends Classes.Vehicle {
-    constructor(wheels, power, gps) {
-        // Be sure to call the parent's constructor
-        // Default values are undefined until you call the superclass constructor.
-        super(wheels, power);
-        this.gps = gps;
-    }
+  constructor(wheels, power, gps) {
+    // Be sure to call the parent's constructor
+    // Default values are undefined until you call the superclass constructor.
+    super(wheels, power);
+    this.gps = gps;
+  }
 }
 // Replace content within HTML
 document.getElementById("vehicle-speed").textContent =
-    `${myVehicle.speed} km/h.`;
+  `${myVehicle.speed} km/h.`;
 const myCar = new Car(4, 150, true);
 console.log(`My car's GPS is ${myCar.gps ? "enabled" : "disabled"}.`);
 myCar.accelerate(10);
 document.getElementById("child-vehicle-speed").textContent =
-    `${myCar.speed} km/h.`;
+  `${myCar.speed} km/h.`;
 document.getElementById("child-gps").textContent =
-    `${myCar.gps ? "enabled" : "disabled"}`;
+  `${myCar.gps ? "enabled" : "disabled"}`;

@@ -14,7 +14,7 @@ namespace Arrays {
 }
 
 // Push a number to a list
-// Appends new elements to the end of an array, and returns the new length 
+// Appends new elements to the end of an array, and returns the new length
 // of the array.
 Arrays.list1.push(6);
 
@@ -33,4 +33,3 @@ Arrays.list1.shift();
 
 document.getElementById("array-list-1")!.textContent = Arrays.list1.toString();
 document.getElementById("array-list-2")!.textContent = Arrays.list2.toString();
-

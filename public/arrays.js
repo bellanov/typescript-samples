@@ -5,15 +5,15 @@
  */
 var Arrays;
 (function (Arrays) {
-    // An array of numbers - Method 1
-    // Angle brackets - familiar to C# and Java developers
-    Arrays.list1 = [1, 2, 3, 4, 5];
-    // An array of numbers - Method 2
-    // Square brackets - more common in TypeScript and familiar to developers.
-    Arrays.list2 = [6, 7, 8, 9, 10];
+  // An array of numbers - Method 1
+  // Angle brackets - familiar to C# and Java developers
+  Arrays.list1 = [1, 2, 3, 4, 5];
+  // An array of numbers - Method 2
+  // Square brackets - more common in TypeScript and familiar to developers.
+  Arrays.list2 = [6, 7, 8, 9, 10];
 })(Arrays || (Arrays = {}));
 // Push a number to a list
-// Appends new elements to the end of an array, and returns the new length 
+// Appends new elements to the end of an array, and returns the new length
 // of the array.
 Arrays.list1.push(6);
 // Pop a number from a list
