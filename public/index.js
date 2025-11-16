@@ -5,9 +5,9 @@
  */
 var Index;
 (function (Index) {
-    function hello(name) {
-        console.log(`Hello, ${name}!`);
-    }
-    Index.hello = hello;
+  function hello(name) {
+    console.log(`Hello, ${name}!`);
+  }
+  Index.hello = hello;
 })(Index || (Index = {}));
 Index.hello("World");
