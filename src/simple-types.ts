@@ -1,52 +1,76 @@
 /**
- * @fileoverview Introduction to TypeScript. This example demonstrates basic
- * TypeScript features such as types, interfaces, and functions.
+ * @fileoverview Simple Types
+ * Demonstrates primitive types, type aliases, interfaces, enums,
+ * union/intersection types, optional properties, and utility types.
  */
 
-namespace SimpleTypes {
-  // Initial variable using `const`
-  export const myString: string = "Hello, TypeScript!";
+// ── Primitive types ──────────────────────────────────────────────────────────
 
-  // Initial variable using `let`
-  export let myNumber: number = 43;
+export const greeting: string = "Hello, TypeScript!";
+export const version: number = 1;
+export const isActive: boolean = true;
 
-  // An array of numbers - Method 1
-  // Angle brackets - familiar to C# and Java developers
-  export let list1: Array<number> = [1, 2, 3, 4, 5];
+// ── Type aliases ─────────────────────────────────────────────────────────────
 
-  // An array of numbers - Method 2
-  // Square brackets - more common in TypeScript and familiar to developers.
-  export let list2: number[] = [6, 7, 8, 9, 10];
+export type ID = string | number;
+export type Nullable<T> = T | null;
+
+// ── Interface with optional and readonly properties ───────────────────────────
+
+export interface User {
+  readonly id: ID;
+  name: string;
+  email?: string;
 }
 
-// Displaying the variables
-console.log("Number: " + SimpleTypes.myNumber);
-console.log("String: " + SimpleTypes.myString);
+// ── Enum ─────────────────────────────────────────────────────────────────────
 
-// Push a number to a list
-// Appends new elements to the end of an array, and returns the new length
-// of the array.
-SimpleTypes.list1.push(6);
+export enum Direction {
+  North = "NORTH",
+  South = "SOUTH",
+  East = "EAST",
+  West = "WEST",
+}
 
-// Pop a number from a list
-// Removes the last element from an array and returns that element.
-SimpleTypes.list1.pop();
+// ── Union and intersection types ─────────────────────────────────────────────
 
-// Unshift a number to the beginning of a list
-// Adds new elements to the beginning of an array and returns the new length
-// of the array.
-SimpleTypes.list1.unshift(0);
+export type StringOrNumber = string | number;
 
-// Shift a number from the beginning of a list
-// Removes the first element from an array and returns that element.
-SimpleTypes.list1.shift();
+export interface HasName {
+  name: string;
+}
 
-document.getElementById("array-list-1")!.textContent =
-  SimpleTypes.list1.toString();
-document.getElementById("array-list-2")!.textContent =
-  SimpleTypes.list2.toString();
+export interface HasAge {
+  age: number;
+}
 
-// Example of using TypeScript in the browser
-document.getElementById("number")!.textContent =
-  SimpleTypes.myNumber.toString();
-document.getElementById("string")!.textContent = SimpleTypes.myString;
+export type Person = HasName & HasAge;
+
+// ── Utility types ─────────────────────────────────────────────────────────────
+
+export type PartialUser = Partial<User>;
+export type RequiredUser = Required<User>;
+export type UserName = Pick<User, "name">;
+export type UserWithoutEmail = Omit<User, "email">;
+export type DirectionMap = Record<string, Direction>;
+
+// ── Type guard ───────────────────────────────────────────────────────────────
+
+export function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+export function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "id" in value &&
+    "name" in value
+  );
+}
+
+// ── Factory function using utility types ──────────────────────────────────────
+
+export function createUser(id: ID, name: string, email?: string): User {
+  return { id, name, ...(email !== undefined ? { email } : {}) };
+}

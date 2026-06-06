@@ -1,61 +1,137 @@
 /**
- * @fileoverview Classes.
- * Example class implementation, with type declarations to the function
- * properties defined. It resembles plain old JavaScript otherwise.
+ * @fileoverview Classes
+ * Demonstrates OOP design patterns: classes, access modifiers, inheritance,
+ * abstract classes, and interface implementation.
  */
 
-/**
- * IMPORTANT
- * Class declarations aren't hoisted like usual variable declarations, so they
- * must be declared at the top of the file. Hoisting them manually essentially.
- */
+// ── Interface ─────────────────────────────────────────────────────────────────
 
-namespace Classes {
-  export class Vehicle {
-    wheels: number;
-    power: number;
-    speed: number = 0;
-
-    constructor(wheels: number, power: number) {
-      this.wheels = wheels;
-      this.power = power;
-    }
-
-    // Specify return type
-    accelerate(time: number): void {
-      this.speed = this.speed + 0.5 * this.power * time;
-    }
-  }
+export interface Drivable {
+  accelerate(time: number): void;
+  brake(time: number): void;
+  getSpeed(): number;
 }
 
-// Import class exported from namespace
-const myVehicle: Classes.Vehicle = new Classes.Vehicle(4, 150);
-myVehicle.accelerate(10);
+// ── Abstract base class ───────────────────────────────────────────────────────
 
-// Log to console
-console.log(`My vehicle's speed is ${myVehicle.speed} km/h.`);
+export abstract class Vehicle implements Drivable {
+  readonly wheels: number;
+  protected readonly power: number;
+  private _speed: number = 0;
 
-class Car extends Classes.Vehicle {
-  gps: boolean;
+  constructor(wheels: number, power: number) {
+    this.wheels = wheels;
+    this.power = power;
+  }
 
-  constructor(wheels: number, power: number, gps: boolean) {
-    // Be sure to call the parent's constructor
-    // Default values are undefined until you call the superclass constructor.
+  accelerate(time: number): void {
+    this._speed = this._speed + 0.5 * this.power * time;
+  }
+
+  brake(time: number): void {
+    this._speed = Math.max(0, this._speed - 0.5 * this.power * time);
+  }
+
+  getSpeed(): number {
+    return this._speed;
+  }
+
+  abstract describe(): string;
+}
+
+// ── Concrete subclass ─────────────────────────────────────────────────────────
+
+export class Car extends Vehicle {
+  readonly make: string;
+  readonly model: string;
+  private _gpsEnabled: boolean;
+
+  constructor(
+    wheels: number,
+    power: number,
+    make: string,
+    model: string,
+    gpsEnabled = false,
+  ) {
     super(wheels, power);
-    this.gps = gps;
+    this.make = make;
+    this.model = model;
+    this._gpsEnabled = gpsEnabled;
+  }
+
+  get gpsEnabled(): boolean {
+    return this._gpsEnabled;
+  }
+
+  enableGps(): void {
+    this._gpsEnabled = true;
+  }
+
+  disableGps(): void {
+    this._gpsEnabled = false;
+  }
+
+  describe(): string {
+    return `${this.make} ${this.model} — ${this.wheels} wheels, ${this.power} hp`;
   }
 }
 
-// Replace content within HTML
-document.getElementById("vehicle-speed")!.textContent =
-  `${myVehicle.speed} km/h.`;
+export class ElectricCar extends Car {
+  private _batteryLevel: number;
 
-const myCar: Car = new Car(4, 150, true);
-console.log(`My car's GPS is ${myCar.gps ? "enabled" : "disabled"}.`);
+  constructor(
+    wheels: number,
+    power: number,
+    make: string,
+    model: string,
+    batteryLevel = 100,
+  ) {
+    super(wheels, power, make, model, true);
+    this._batteryLevel = batteryLevel;
+  }
 
-myCar.accelerate(10);
+  get batteryLevel(): number {
+    return this._batteryLevel;
+  }
 
-document.getElementById("child-vehicle-speed")!.textContent =
-  `${myCar.speed} km/h.`;
-document.getElementById("child-gps")!.textContent =
-  `${myCar.gps ? "enabled" : "disabled"}`;
+  charge(percent: number): void {
+    this._batteryLevel = Math.min(100, this._batteryLevel + percent);
+  }
+
+  describe(): string {
+    return `${super.describe()} [Electric, battery: ${this._batteryLevel}%]`;
+  }
+}
+
+// ── Singleton pattern ─────────────────────────────────────────────────────────
+
+export class Fleet {
+  private static _instance: Fleet | null = null;
+  private _vehicles: Vehicle[] = [];
+
+  private constructor() {}
+
+  static getInstance(): Fleet {
+    if (Fleet._instance === null) {
+      Fleet._instance = new Fleet();
+    }
+    return Fleet._instance;
+  }
+
+  /** Exposed only for testing – resets the singleton state. */
+  static reset(): void {
+    Fleet._instance = null;
+  }
+
+  add(vehicle: Vehicle): void {
+    this._vehicles.push(vehicle);
+  }
+
+  count(): number {
+    return this._vehicles.length;
+  }
+
+  list(): Vehicle[] {
+    return [...this._vehicles];
+  }
+}

@@ -1,29 +1,35 @@
 {
-  "name": "typescript-template",
-  "version": "0.1.0",
-  "description": "Template for general TypeScript development.",
-  "homepage": "https://github.com/bellanov/typescript-template#readme",
+  "name": "typescript-samples",
+  "version": "1.0.0",
+  "description": "A template demonstrating modern TypeScript design patterns.",
+  "homepage": "https://github.com/bellanov/typescript-samples#readme",
   "bugs": {
-    "url": "https://github.com/bellanov/typescript-template/issues"
+    "url": "https://github.com/bellanov/typescript-samples/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bellanov/typescript-template.git"
+    "url": "git+https://github.com/bellanov/typescript-samples.git"
   },
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
+  "main": "dist/index.js",
   "scripts": {
-    "format": "npx prettier . --write",
-    "check-types": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "format": "prettier . --write",
+    "lint": "eslint src",
+    "test": "jest --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
+    "eslint": "^9.28.0",
+    "jest": "^29.7.0",
     "prettier": "3.6.0",
-    "typescript": "^5.8.3"
+    "ts-jest": "^29.3.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
   }
 }
