@@ -179,3 +179,9 @@ dist
 # Diagrams
 /diagrams/*.png.bkp
 /diagrams/*.png.dtmp
+
+# Build output
+dist/
+
+# Test coverage
+coverage/

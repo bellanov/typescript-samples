@@ -1,12 +1,8 @@
 /**
- * @fileoverview Introduction to TypeScript. This example demonstrates basic
- * TypeScript features such as types, interfaces, and functions.
+ * @fileoverview TypeScript Samples
+ * Barrel file — re-exports all public API surfaces.
  */
 
-namespace Index {
-  export function hello(name: string) {
-    console.log(`Hello, ${name}!`);
-  }
-}
-
-Index.hello("World");
+export * from "./arrays";
+export * from "./classes";
+export * from "./simple-types";

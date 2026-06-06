@@ -1,35 +1,88 @@
 /**
- * @fileoverview Introduction to TypeScript. This example demonstrates basic
- * TypeScript features such as types, interfaces, and functions.
+ * @fileoverview Arrays & Generics
+ * Demonstrates generic functions, type-safe array operations, and common
+ * functional programming patterns (map, filter, reduce).
  */
 
-namespace Arrays {
-  // An array of numbers - Method 1
-  // Angle brackets - familiar to C# and Java developers
-  export let list1: Array<number> = [1, 2, 3, 4, 5];
+// ── Generic stack ─────────────────────────────────────────────────────────────
 
-  // An array of numbers - Method 2
-  // Square brackets - more common in TypeScript and familiar to developers.
-  export let list2: number[] = [6, 7, 8, 9, 10];
+export class Stack<T> {
+  private _items: T[] = [];
+
+  push(item: T): void {
+    this._items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this._items.pop();
+  }
+
+  peek(): T | undefined {
+    return this._items[this._items.length - 1];
+  }
+
+  get size(): number {
+    return this._items.length;
+  }
+
+  isEmpty(): boolean {
+    return this._items.length === 0;
+  }
+
+  toArray(): T[] {
+    return [...this._items];
+  }
 }
 
-// Push a number to a list
-// Appends new elements to the end of an array, and returns the new length
-// of the array.
-Arrays.list1.push(6);
+// ── Generic utility functions ─────────────────────────────────────────────────
 
-// Pop a number from a list
-// Removes the last element from an array and returns that element.
-Arrays.list1.pop();
+export function first<T>(arr: T[]): T | undefined {
+  return arr[0];
+}
 
-// Unshift a number to the beginning of a list
-// Adds new elements to the beginning of an array and returns the new length
-// of the array.
-Arrays.list1.unshift(0);
+export function last<T>(arr: T[]): T | undefined {
+  return arr[arr.length - 1];
+}
 
-// Shift a number from the beginning of a list
-// Removes the first element from an array and returns that element.
-Arrays.list1.shift();
+export function chunk<T>(arr: T[], size: number): T[][] {
+  if (size <= 0) throw new RangeError("Chunk size must be greater than 0");
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
 
-document.getElementById("array-list-1")!.textContent = Arrays.list1.toString();
-document.getElementById("array-list-2")!.textContent = Arrays.list2.toString();
+export function unique<T>(arr: T[]): T[] {
+  return [...new Set(arr)];
+}
+
+export function flatten<T>(arr: T[][]): T[] {
+  return arr.reduce<T[]>((acc, curr) => acc.concat(curr), []);
+}
+
+// ── Typed array operations ─────────────────────────────────────────────────────
+
+export function sum(numbers: number[]): number {
+  return numbers.reduce((acc, n) => acc + n, 0);
+}
+
+export function average(numbers: number[]): number {
+  if (numbers.length === 0) return 0;
+  return sum(numbers) / numbers.length;
+}
+
+export function groupBy<T, K extends string | number | symbol>(
+  arr: T[],
+  keyFn: (item: T) => K,
+): Record<K, T[]> {
+  return arr.reduce(
+    (groups, item) => {
+      const key = keyFn(item);
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(item);
+      return groups;
+    },
+    {} as Record<K, T[]>,
+  );
+}

@@ -1,53 +1,47 @@
-# typescript-template
+# TypeScript Samples
 
-Template for general **TypeScript** development.
+A template demonstrating modern TypeScript design patterns for Node.js applications.
 
-The template contains examples of best practices and standards derived from the [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html).
+## Features
+
+- **Simple Types** — primitives, type aliases, interfaces, enums, union/intersection types, utility types, and type guards
+- **Classes** — access modifiers, abstract classes, inheritance, getters/setters, and the Singleton design pattern
+- **Arrays & Generics** — generic `Stack<T>`, generic utility functions (`chunk`, `groupBy`, `flatten`, etc.), and typed array operations
+
+## Getting Started
+
+```bash
+npm install
+```
+
+## Scripts
+
+| Command           | Description                              |
+| ----------------- | ---------------------------------------- |
+| `npm run build`   | Compile TypeScript to `dist/`            |
+| `npm run lint`    | Lint source files with ESLint            |
+| `npm test`        | Run unit tests and display code coverage |
+| `npm run format`  | Format code with Prettier                |
+| `npm run typecheck` | Type-check without emitting output     |
 
 ## Project Structure
 
-Summary of the project _directories_.
-
-| Directory     | Description                                              |
-| ------------- | -------------------------------------------------------- |
-| **_src/_**    | Contains source code, written in _TypeScript_.           |
-| **_public/_** | Contains compiled _TypeScript_, written in _JavaScript_. |
-
-## Tasks
-
-Summary of the available _NPM Tasks_ and their usage. Details available within each script.
-
-| Task            | Description                             |
-| --------------- | --------------------------------------- |
-| **format**      | _Lint_ / _format_ the codebase.         |
-| **build**       | Execute a _production_ build.           |
-| **check-types** | Compile _TypeScript_ into _JavaScript_. |
-| **dev**         | Execute a _development_ build.          |
-| **start**       | Start the development server.           |
-| **test**        | Execute _unit tests_.                   |
-
-## Usage
-
-Summary of how to add onto the project.
-
-1. Create a new TypeScript file.
-
-```sh
-touch src/new-script.ts
+```
+src/
+├── __tests__/           # Jest unit tests
+│   ├── arrays.test.ts
+│   ├── classes.test.ts
+│   └── simple-types.test.ts
+├── arrays.ts            # Generic Stack, utility functions, typed array ops
+├── classes.ts           # OOP patterns: abstract classes, inheritance, Singleton
+├── index.ts             # Barrel re-export
+└── simple-types.ts      # Types, interfaces, enums, type guards, utility types
 ```
 
-2. Add new **entry** for the script to the _webpack configuration (webpack.config.js)_ so its contents are compiled as part of our **bundle**.
+## CI/CD
 
-```sh
-entry: {
-  "main": "./src/index.ts",
-  "new-script": "./src/new-script.ts",
-}
-```
+The repository includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that automatically runs on every push and pull request to `main`:
 
-3. Import compiled _JavaScript_ file into the **index.html** file.
-
-```javascript
-<script src="main.js"></script>
-<script src="new-script.js"></script>
-```
+1. **Lint** — ESLint with TypeScript rules
+2. **Build** — TypeScript compilation
+3. **Test** — Jest unit tests with code coverage report
